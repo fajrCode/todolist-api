@@ -1,12 +1,14 @@
 import app from './config/app.js';
-import { PORT, HOST } from './config/env.js';
+import env from './config/env.js';
 
-const startServer = () => {
-  try {
-    app.listen(PORT, () => {
-      console.log(`Server running ${HOST}`);
-    });
-  } catch (error) {
-    console.error(`Server Error: ${error}`);
-  }
+const startServer = async () => {
+    try {
+        app.listen(env.port, () => {
+            console.log(`🚀 Server running on ${env.host}`);
+        });
+    } catch (error) {
+        console.error(`Server Error: ${error}`);
+    }
 };
+
+startServer();
