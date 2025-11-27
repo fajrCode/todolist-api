@@ -1,0 +1,27 @@
+{
+  "name": "todolist-api",
+  "version": "1.0.0",
+  "description": "Learn expressjs + sequelize + jest",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon src/main.js",
+    "start": "node src/main.js",
+    "format-fix": "prettier --write src",
+    "format:check": "prettier --check src",
+    "lint": "eslint src"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "express": "^5.1.0",
+    "mysql2": "^3.15.3",
+    "sequelize": "^6.37.7"
+  },
+  "devDependencies": {
+    "eslint": "^9.39.1",
+    "prettier": "^3.6.2"
+  }
+}
