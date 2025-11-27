@@ -9,3 +9,5 @@ export const syncModels = async (force = false) => {
         throw err;
     }
 };
+
+export { Todo };

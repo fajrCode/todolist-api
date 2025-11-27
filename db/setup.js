@@ -8,7 +8,7 @@ const setupDb = async () => {
         const isConnected = await testDbConn();
         if (!isConnected) throw new Error('Db connection failed');
         console.log('Sync models...');
-        await syncModels();
+        await syncModels(true);
         await db.close();
         process.exit(0);
     } catch (err) {

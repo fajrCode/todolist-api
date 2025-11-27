@@ -33,6 +33,9 @@ const Todo = db.define(
                 },
             },
         },
+        deletedAt: {
+            type: DataTypes.DATE,
+        },
     },
     {
         tableName: 'todos',
