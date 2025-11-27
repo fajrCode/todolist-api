@@ -10,6 +10,8 @@
         "format-fix": "prettier --write src",
         "format:check": "prettier --check src",
         "lint": "eslint src",
+        "test": "jest",
+        "test:coverage": "jest --coverage",
         "db:setup": "node ./db/setup.js"
     },
     "keywords": [],
@@ -24,8 +26,13 @@
         "sequelize": "^6.37.7"
     },
     "devDependencies": {
+        "@babel/core": "^7.28.5",
+        "@babel/preset-env": "^7.28.5",
+        "@jest/globals": "^30.2.0",
+        "babel-jest": "^30.2.0",
         "eslint": "^9.39.1",
         "express-list-endpoints": "^7.1.1",
+        "jest": "^30.2.0",
         "morgan": "^1.10.1",
         "prettier": "^3.6.2"
     }
