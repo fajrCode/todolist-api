@@ -4,11 +4,10 @@ import { syncModels } from '../src/models/index.js';
 const setupDb = async () => {
     try {
         console.log('🚀 Start db setup');
-        console.log('Test connection...');
-        const isConnected = await testDbConn();
-        if (!isConnected) throw new Error('Db connection failed');
-        console.log('Sync models...');
-        await syncModels(true);
+        console.log('💡Test connection...');
+        await testDbConn();
+        console.log('🔃 Sync models...');
+        await syncModels();
         await db.close();
         process.exit(0);
     } catch (err) {

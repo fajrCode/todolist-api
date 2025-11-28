@@ -33,16 +33,30 @@ const Todo = db.define(
                 },
             },
         },
+        categoryId: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+            // field: 'category_id',
+            references: {
+                model: 'categories',
+                key: 'id',
+            },
+            onDelete: 'RESTRICT',
+            onUpdate: 'CASCADE',
+        },
         deletedAt: {
             type: DataTypes.DATE,
         },
     },
     {
-        tableName: 'todos',
+        // tableName: 'todos', // bisa disesuaikan, namun default nya auto plural
         timestamps: true,
         indexes: [
             {
                 fields: ['status'],
+            },
+            {
+                fields: ['category_id'],
             },
         ],
     }
