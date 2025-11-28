@@ -36,7 +36,6 @@ const Todo = db.define(
         categoryId: {
             type: DataTypes.INTEGER,
             allowNull: false,
-            // field: 'category_id',
             references: {
                 model: 'categories',
                 key: 'id',
