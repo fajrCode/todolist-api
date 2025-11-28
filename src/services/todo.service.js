@@ -17,7 +17,7 @@ export const getOneData = async (id) => {
             deletedAt: null,
         },
     });
-    if (!todo) throw new ErrorCustom('Data not found!', 404);
+    if (!todo) throw new ErrorCustom(404);
     return todo;
 };
 

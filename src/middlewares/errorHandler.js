@@ -1,7 +1,7 @@
 import response from '../utils/response.js';
 import env from '../config/env.js';
 
-export const notFound = (_, res) => {
+export const notFound = (req, res) => {
     response(res, 404, 'Resource not found!');
 };
 
@@ -14,12 +14,23 @@ export const other = (err, req, res, next) => {
     res.status(statusCode);
 
     if (env.nodeEnv === 'development') {
-        console.info(err.message);
+        console.info(err);
     } else if (statusCode === 500) {
-        console.info(err.message);
+        console.error(err.message);
     }
 
-    const message = statusCode === 500 ? 'Internal Server Error' : err.message;
+    let message = statusCode === 500 ? 'Internal Server Error' : err.message;
+
+    if (err.errors) {
+        const eType = {
+            1062: 409,
+        };
+        res.status(eType[err.parent.errno]);
+        message = err.message;
+        err.data = err.errors.map((e) => {
+            return e.message;
+        });
+    }
 
     res.json({
         status: err.status || false,

@@ -1,7 +1,7 @@
 import * as TodoService from '../services/todo.service.js';
 import response from '../utils/response.js';
 
-export const getTodoList = async (_, res, next) => {
+export const getTodoList = async (req, res, next) => {
     try {
         const data = await TodoService.getAllData();
         response(res, 200, 'Success', data);
