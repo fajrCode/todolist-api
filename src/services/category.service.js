@@ -22,10 +22,10 @@ export const createData = async (body) => {
 };
 
 export const updateData = async (id, body) => {
-    const [category] = await Category.update(body, {
+    const [affected] = await Category.update(body, {
         where: { id },
     });
-    if (!category) throw new ErrorCustom(404, 'No record found for that id');
+    if (!affected) throw new ErrorCustom(404, 'No record found for that id');
     return body;
 };
 

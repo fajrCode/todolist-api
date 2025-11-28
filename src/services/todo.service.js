@@ -27,17 +27,17 @@ export const createData = async (body) => {
 };
 
 export const updateData = async (id, body) => {
-    const [todo] = await Todo.update(body, {
+    const [affected] = await Todo.update(body, {
         where: {
             id,
         },
     });
-    if (!todo) throw new ErrorCustom(404, 'No record found for that id');
+    if (!affected) throw new ErrorCustom(404, 'No record found for that id');
     return body;
 };
 
 export const deleteData = async (id) => {
-    const todo = await Todo.update(
+    const [affected] = await Todo.update(
         {
             deletedAt: new Date(),
         },
@@ -45,6 +45,6 @@ export const deleteData = async (id) => {
             where: { id },
         }
     );
-    if (!todo) throw new ErrorCustom(404, 'No record found for that id');
+    if (!affected) throw new ErrorCustom(404, 'No record found for that id');
     return id;
 };
