@@ -36,7 +36,7 @@ jobs:
             - name: Run tests
               env:
                   NODE_ENV: test
-              run: npm run test
+              run: npm run test:coverage
 
             # Step 6: Upload coverage to Codecov
             - name: Upload coverage to Codecov
