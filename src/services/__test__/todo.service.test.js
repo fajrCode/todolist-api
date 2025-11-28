@@ -1,4 +1,4 @@
-import { jest, describe, test, expect, beforeEach } from '@jest/globals';
+import { jest, describe, it, expect, beforeEach } from '@jest/globals';
 import { getAllData, getOneData, createData, updateData, deleteData } from '../todo.service.js';
 import { Todo } from '../../models/index.js';
 import ErrorCustom from '../../utils/customError.js';
@@ -11,7 +11,7 @@ describe('Todo Service', () => {
     });
 
     describe('getAllData', () => {
-        test('Should return all todos', async () => {
+        it('Should return all todos', async () => {
             const mockTodos = [
                 { id: 1, task: 'Todo 1', status: 'Pending', deletedAt: null },
                 { id: 2, task: 'Todo 2', status: 'On Progress', deletedAt: null },
@@ -24,14 +24,14 @@ describe('Todo Service', () => {
             expect(result).toEqual(mockTodos);
         });
 
-        test('Should propagate error from model', async () => {
+        it('Should propagate error from model', async () => {
             Todo.findAll.mockRejectedValue(new Error('DB error'));
             await expect(getAllData()).rejects.toThrow('DB error');
         });
     });
 
     describe('getOneData', () => {
-        test('Should return a todo by id', async () => {
+        it('Should return a todo by id', async () => {
             const mockTodo = { id: 1, task: 'Todo 1', status: 'Pending', deletedAt: null };
             Todo.findOne.mockResolvedValue(mockTodo);
 
@@ -41,7 +41,7 @@ describe('Todo Service', () => {
             expect(result).toEqual(mockTodo);
         });
 
-        test('Should throw error when todo not found', async () => {
+        it('Should throw error when todo not found', async () => {
             Todo.findOne.mockResolvedValue(null);
 
             await expect(getOneData(999)).rejects.toThrow(ErrorCustom);
@@ -50,7 +50,7 @@ describe('Todo Service', () => {
     });
 
     describe('createData', () => {
-        test('Should create and return todo', async () => {
+        it('Should create and return todo', async () => {
             const mockBody = { task: 'New Todo', categoryId: 1 };
             Todo.create.mockResolvedValue(mockBody);
 
@@ -60,7 +60,7 @@ describe('Todo Service', () => {
             expect(result).toEqual(mockBody);
         });
 
-        test('Should propagate error when create fails', async () => {
+        it('Should propagate error when create fails', async () => {
             const mockBody = { task: 'Bad Todo', categoryId: 1 };
             Todo.create.mockRejectedValue(new Error('Create failed'));
             await expect(createData(mockBody)).rejects.toThrow('Create failed');
@@ -69,7 +69,7 @@ describe('Todo Service', () => {
 
     describe('updateData', () => {
         const mockBody = { task: 'Updated Todo' };
-        test('Should update and return todo', async () => {
+        it('Should update and return todo', async () => {
             Todo.update.mockResolvedValue([1]);
 
             const result = await updateData(1, mockBody);
@@ -78,7 +78,7 @@ describe('Todo Service', () => {
             expect(result).toEqual(mockBody);
         });
 
-        test('Should throw error when update target not found', async () => {
+        it('Should throw error when update target not found', async () => {
             Todo.update.mockResolvedValue([0]);
             await expect(updateData(999, mockBody)).rejects.toThrow(ErrorCustom);
             expect(Todo.update).toHaveBeenCalledWith(mockBody, { where: { id: 999 } });
@@ -86,7 +86,7 @@ describe('Todo Service', () => {
     });
 
     describe('deleteData', () => {
-        test('Should soft delete todo and return id', async () => {
+        it('Should soft delete todo and return id', async () => {
             Todo.update.mockResolvedValue([1]);
 
             const result = await deleteData(1);
@@ -98,7 +98,7 @@ describe('Todo Service', () => {
             expect(result).toBe(1);
         });
 
-        test('Should throw error when delete target not found', async () => {
+        it('Should throw error when delete target not found', async () => {
             Todo.update.mockResolvedValue([0]);
             await expect(deleteData(999)).rejects.toThrow(ErrorCustom);
             expect(Todo.update).toHaveBeenCalledWith(
