@@ -23,6 +23,11 @@ describe('Todo Service', () => {
             expect(Todo.findAll).toHaveBeenCalledWith({ where: { deletedAt: null } });
             expect(result).toEqual(mockTodos);
         });
+
+        test('Should propagate error from model', async () => {
+            Todo.findAll.mockRejectedValue(new Error('DB error'));
+            await expect(getAllData()).rejects.toThrow('DB error');
+        });
     });
 
     describe('getOneData', () => {
@@ -46,7 +51,7 @@ describe('Todo Service', () => {
 
     describe('createData', () => {
         test('Should create and return todo', async () => {
-            const mockBody = { task: 'New Todo' };
+            const mockBody = { task: 'New Todo', categoryId: 1 };
             Todo.create.mockResolvedValue(mockBody);
 
             const result = await createData(mockBody);
@@ -54,17 +59,29 @@ describe('Todo Service', () => {
             expect(Todo.create).toHaveBeenCalledWith(mockBody);
             expect(result).toEqual(mockBody);
         });
+
+        test('Should propagate error when create fails', async () => {
+            const mockBody = { task: 'Bad Todo', categoryId: 1 };
+            Todo.create.mockRejectedValue(new Error('Create failed'));
+            await expect(createData(mockBody)).rejects.toThrow('Create failed');
+        });
     });
 
     describe('updateData', () => {
+        const mockBody = { task: 'Updated Todo' };
         test('Should update and return todo', async () => {
-            const mockBody = { task: 'Updated Todo' };
             Todo.update.mockResolvedValue([1]);
 
             const result = await updateData(1, mockBody);
 
             expect(Todo.update).toHaveBeenCalledWith(mockBody, { where: { id: 1 } });
             expect(result).toEqual(mockBody);
+        });
+
+        test('Should throw error when update target not found', async () => {
+            Todo.update.mockResolvedValue([0]);
+            await expect(updateData(999, mockBody)).rejects.toThrow(ErrorCustom);
+            expect(Todo.update).toHaveBeenCalledWith(mockBody, { where: { id: 999 } });
         });
     });
 
@@ -79,6 +96,15 @@ describe('Todo Service', () => {
                 { where: { id: 1 } }
             );
             expect(result).toBe(1);
+        });
+
+        test('Should throw error when delete target not found', async () => {
+            Todo.update.mockResolvedValue([0]);
+            await expect(deleteData(999)).rejects.toThrow(ErrorCustom);
+            expect(Todo.update).toHaveBeenCalledWith(
+                { deletedAt: expect.any(Date) },
+                { where: { id: 999 } }
+            );
         });
     });
 });
