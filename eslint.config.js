@@ -17,7 +17,7 @@ export default [
         },
     },
     {
-        ignores: ['node_modules', 'coverage', '*.config.js'],
+        ignores: ['node_modules', 'coverage', '*.config.js', "db"],
     },
     pluginJs.configs.recommended, // Menambahkan konfigurasi linting dari @eslint/js
 ];
