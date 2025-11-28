@@ -11,7 +11,7 @@ const env = {
         user: process.env.DB_USER || 'root',
         password: process.env.DB_PASSWORD || '',
         dialect: process.env.DB_DIALECT || 'mysql',
-        name: process.env.DB_NAME || (NODE_ENV === 'test' ? 'test_db' : 'app_db'),
+        name: process.env.DB_NAME || 'mydb',
     },
     cors: {
         origin: process.env.CORS_ORIGIN || '*',
